@@ -1,7 +1,7 @@
 class CreateToilets < ActiveRecord::Migration
   def change
     create_table :toilets do |t|
-      t.integer :building_id
+      t.references :building_id
       t.integer :store_id
       t.float :latitude
       t.float :longitude
@@ -11,5 +11,8 @@ class CreateToilets < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :toilets, [:building_id, :longitude, :latitude]
+
   end
 end
