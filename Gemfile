@@ -43,3 +43,8 @@ gem 'factory_girl_rails'
 group :development, :test do
   gem 'rspec-rails'
 end
+
+gem 'grape'
+gem 'grape-rabl'
+gem 'rabl'
+gem 'oj'
