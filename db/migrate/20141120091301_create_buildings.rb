@@ -4,6 +4,7 @@ class CreateBuildings < ActiveRecord::Migration
       t.float :latitude
       t.float :laongitude
       t.string :name
+      t.integer :floor_size
 
       t.timestamps
     end

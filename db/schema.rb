@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20141120112605) do
     t.float    "latitude",   limit: 24
     t.float    "laongitude", limit: 24
     t.string   "name"
+    t.integer  "floor_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
