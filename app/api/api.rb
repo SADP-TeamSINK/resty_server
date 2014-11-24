@@ -16,7 +16,7 @@ class API < Grape::API
       requires :status, type: Boolean, desc: 'Room status'
     end
     post do
-      @room = Room.new(empty_params)
+      @room = Empty.new(room_id: params[:room_id], status: params[:status])
       if @room.save
         # 更新に成功した場合
         render :text => 'Success to update!', :status => 201
@@ -51,12 +51,5 @@ class API < Grape::API
       # JSON整形
       @buildings.to_json({:include => {:toilets => {:include => :rooms}}})
     end
-  end
-
-
-  private
-
-  def empty_params
-    params.require(:empty).permit(:room_id, :status)
   end
 end
