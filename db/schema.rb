@@ -95,11 +95,12 @@ ActiveRecord::Schema.define(version: 20141125160213) do
   create_table "rooms", force: true do |t|
     t.integer  "toilet_id"
     t.boolean  "washlet"
+    t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rooms", ["washlet"], name: "index_rooms_on_washlet", using: :btree
+  add_index "rooms", ["washlet", "status"], name: "index_rooms_on_washlet_and_status", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
