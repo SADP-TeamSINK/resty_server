@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20141125160213) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "buildings", force: true do |t|
-    t.float    "latitude",   limit: 24
-    t.float    "longitude",  limit: 24
+    t.decimal  "latitude",   precision: 9, scale: 6
+    t.decimal  "longitude",  precision: 9, scale: 6
     t.string   "name"
     t.integer  "floor_size"
     t.datetime "created_at"
@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(version: 20141125160213) do
   create_table "toilets", force: true do |t|
     t.integer  "building_id"
     t.integer  "store_id"
-    t.float    "latitude",     limit: 24
-    t.float    "longitude",    limit: 24
+    t.decimal  "latitude",     precision: 9, scale: 6
+    t.decimal  "longitude",    precision: 9, scale: 6
     t.boolean  "multipurpose"
     t.integer  "floor"
     t.integer  "sex"
