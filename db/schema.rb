@@ -94,13 +94,14 @@ ActiveRecord::Schema.define(version: 20141125160213) do
 
   create_table "rooms", force: true do |t|
     t.integer  "toilet_id"
+    t.boolean  "available"
     t.boolean  "washlet"
-    t.boolean  "status"
+    t.boolean  "multipurpose"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rooms", ["washlet", "status"], name: "index_rooms_on_washlet_and_status", using: :btree
+  add_index "rooms", ["washlet", "available", "multipurpose"], name: "index_rooms_on_washlet_and_available_and_multipurpose", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
@@ -120,10 +121,9 @@ ActiveRecord::Schema.define(version: 20141125160213) do
 
   create_table "toilets", force: true do |t|
     t.integer  "building_id"
-    t.integer  "store_id"
-    t.decimal  "latitude",     precision: 9, scale: 6
-    t.decimal  "longitude",    precision: 9, scale: 6
-    t.boolean  "multipurpose"
+    t.string   "store_name"
+    t.decimal  "latitude",    precision: 9, scale: 6
+    t.decimal  "longitude",   precision: 9, scale: 6
     t.integer  "floor"
     t.integer  "sex"
     t.datetime "created_at"
