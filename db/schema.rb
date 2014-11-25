@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20141125160213) do
 
   create_table "buildings", force: true do |t|
     t.float    "latitude",   limit: 24
-    t.float    "laongitude", limit: 24
+    t.float    "longitude",  limit: 24
     t.string   "name"
     t.integer  "floor_size"
     t.datetime "created_at"
