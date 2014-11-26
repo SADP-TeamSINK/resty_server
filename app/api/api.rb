@@ -35,17 +35,18 @@ class API < Grape::API
       requires :mesh_numbers, type: Array, desc: 'Mesh numbers'
     end
     post do
+      p params
       @buildings = []
-      mesh_numbers = params[mesh_numbers]
+      mesh_numbers = params[:mesh_numbers]
       mesh_numbers.each {|mesh|
         # 検索に必要な座標の取得
-        x_start = ( mesh / 10 ** 5 ) / 100.0 - 180
-        y_start = ( mesh % 10 ** 5 ) / 100.0 - 90
+        x_start = ( mesh.to_f %  10 ** 5 ) / 100.0 - 180
+        y_start = ( mesh.to_f /  10 ** 5 ) / 100.0 - 90
         x_end = x_start + 0.01
         y_end = y_start + 0.01
 
         # DB検索
-        @buildings.push(Building.find(:all, :conditions => {:longitude => x_start...x_end, :latitude => y_start...y_end }))
+        @buildings.push(Building.where(longitude: x_start...x_end, latitude: y_start...y_end ))
       }
 
       # JSON整形

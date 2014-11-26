@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20141125160213) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "buildings", force: true do |t|
-    t.float    "latitude",   limit: 24
-    t.float    "longitude",  limit: 24
+    t.decimal  "latitude",   precision: 9, scale: 6
+    t.decimal  "longitude",  precision: 9, scale: 6
     t.string   "name"
     t.integer  "floor_size"
     t.datetime "created_at"
@@ -94,12 +94,14 @@ ActiveRecord::Schema.define(version: 20141125160213) do
 
   create_table "rooms", force: true do |t|
     t.integer  "toilet_id"
+    t.boolean  "available"
     t.boolean  "washlet"
+    t.boolean  "multipurpose"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rooms", ["washlet"], name: "index_rooms_on_washlet", using: :btree
+  add_index "rooms", ["washlet", "available", "multipurpose"], name: "index_rooms_on_washlet_and_available_and_multipurpose", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
@@ -119,10 +121,9 @@ ActiveRecord::Schema.define(version: 20141125160213) do
 
   create_table "toilets", force: true do |t|
     t.integer  "building_id"
-    t.integer  "store_id"
-    t.float    "latitude",     limit: 24
-    t.float    "longitude",    limit: 24
-    t.boolean  "multipurpose"
+    t.string   "store_name"
+    t.decimal  "latitude",    precision: 9, scale: 6
+    t.decimal  "longitude",   precision: 9, scale: 6
     t.integer  "floor"
     t.integer  "sex"
     t.datetime "created_at"
