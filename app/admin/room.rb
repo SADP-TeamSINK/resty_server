@@ -4,7 +4,7 @@ ActiveAdmin.register Room do
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
-  permit_params :toilet_id, :washlet
+  permit_params :toilet_id, :washlet, :available, :multipurpose
   #
   # or
   #
