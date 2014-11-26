@@ -40,8 +40,8 @@ class API < Grape::API
       mesh_numbers = params[:mesh_numbers]
       mesh_numbers.each {|mesh|
         # 検索に必要な座標の取得
-        x_start = ( mesh.to_f /  10 ** 5 ) / 100.0 - 180
-        y_start = ( mesh.to_f %  10 ** 5 ) / 100.0 - 90
+        x_start = ( mesh.to_f %  10 ** 5 ) / 100.0 - 180
+        y_start = ( mesh.to_f /  10 ** 5 ) / 100.0 - 90
         x_end = x_start + 0.01
         y_end = y_start + 0.01
 
