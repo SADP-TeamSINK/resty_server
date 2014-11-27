@@ -16,14 +16,8 @@ class API < Grape::API
       requires :status, type: Boolean, desc: 'Room status'
     end
     post do
-      @room = Empty.new(room_id: params[:room_id], status: params[:status])
-      if @room.save
-        # 更新に成功した場合
-        render :text => 'Success to update!', :status => 201
-      else
-        # 更新に失敗した場合
-        render :text => 'Failed to update!', :status => 500
-      end
+      @room = Room.find(params[:room_id])
+      @room.update_attribute(:available, params[:status])
     end
   end
 
