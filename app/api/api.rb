@@ -29,7 +29,6 @@ class API < Grape::API
       requires :mesh_numbers, type: Array, desc: 'Mesh numbers'
     end
     post do
-      p params
       @buildings = []
       mesh_numbers = params[:mesh_numbers]
       mesh_numbers.each {|mesh|
@@ -40,11 +39,33 @@ class API < Grape::API
         y_end = y_start + 0.01
 
         # DB検索
-        @buildings.push(Building.where(longitude: x_start...x_end, latitude: y_start...y_end ))
+        results = Building.where(longitude: x_start...x_end, latitude: y_start...y_end )
+        results.each {|building|
+          @buildings.push(building)
+        }
       }
 
       # JSON整形
-      @buildings.to_json({:include => {:toilets => {:include => :rooms}}})
+      @buildings.to_json({:include => {:toilets => {:include => [:rooms, :toilet_pictures]}}})
+    end
+  end
+
+  # api/v1/rooms 
+  resource :rooms do
+    # POST /api/v1/rooms
+    desc 'トイレに属する個室一覧を取得する'
+    params do
+      requires :toilet_ids, type: Array, desc: 'Toilet IDs'
+    end
+    post do
+      @toilets = []
+      toilet_ids = params[:toilet_ids]
+      toilet_ids.each {|toilet_id|
+        @toilets.push(Toilet.find(toilet_id))
+      }
+
+      # JSON整形
+      @toilets.to_json(:include => :rooms)
     end
   end
 end
