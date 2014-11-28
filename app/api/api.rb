@@ -46,7 +46,7 @@ class API < Grape::API
       }
 
       # JSON整形
-      @buildings.to_json({:include => {:toilets => {:include => :rooms}}})
+      @buildings.to_json({:include => {:toilets => {:include => [:rooms, :toilet_pictures]}}})
     end
   end
 
