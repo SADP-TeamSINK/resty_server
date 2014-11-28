@@ -49,4 +49,23 @@ class API < Grape::API
       @buildings.to_json({:include => {:toilets => {:include => :rooms}}})
     end
   end
+
+  # api/v1/rooms 
+  resource :rooms do
+    # POST /api/v1/rooms
+    desc 'トイレに属する個室一覧を取得する'
+    params do
+      requires :toilet_ids, type: Array, desc: 'Toilet IDs'
+    end
+    post do
+      @toilets = []
+      toilet_ids = params[:toilet_ids]
+      toilet_ids.each {|toilet_id|
+        @toilets.push(Toilet.find(toilet_id))
+      }
+
+      # JSON整形
+      @toilets.to_json(:include => :rooms)
+    end
+  end
 end
